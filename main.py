@@ -1,7 +1,7 @@
 import logging
 
 from src.Setup import Setup
-
+from src.Logger import Logger
 
 def main() -> None:
     setup = Setup()
