@@ -5,7 +5,7 @@ import logging
 class Logger:
     __slots__ = ['__root']
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.__root = logging.getLogger()
         self.__root.setLevel(logging.DEBUG)
         handler = logging.StreamHandler(sys.stdout)
