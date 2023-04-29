@@ -2,21 +2,24 @@ import logging
 
 
 class DataHandler:
-    __slots__ = ['logger', 'fh', 'filename']
+    __slots__ = ["logger", "fh", "filename"]
 
     def __init__(self, filename: str = "data/data.txt"):
         self.filename = filename
         logging.info(f"File Handler created on File: {self.filename}")
-        self.logger = logging.getLogger('my_logger')
+        self.logger = logging.getLogger("my_logger")
         self.logger.setLevel(logging.DEBUG)
-        fh = logging.FileHandler(filename=filename, mode='a', delay=False)
+        fh = logging.FileHandler(filename=filename, mode="a", delay=False)
         fh.setLevel(logging.INFO)
-        fh.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
+        fh.setFormatter(logging.Formatter("%(asctime)s - %(message)s"))
         self.logger.addHandler(fh)
+
     def __del__(self):
         pass
 
-    def read(self,) -> list[str]:
+    def read(
+        self,
+    ) -> list[str]:
         try:
             return_value: list[str] = []
             with open(self.filename) as f:
