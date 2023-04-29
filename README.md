@@ -1,3 +1,3 @@
 # USBKeylogger
-Formatted with black
-# black .
+# Code formatter is black
+black .

