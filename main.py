@@ -3,7 +3,7 @@ import argparse
 
 
 from src.Setup import Setup
-from src.Logger import Logger
+from src.KeyLogger import KeyLogger
 
 def main(args: argparse.ArgumentParser) -> None:
     setup: Setup = Setup(args)

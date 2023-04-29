@@ -1,11 +1,13 @@
+import logging
+
 import usb.core, usb.util
 
 
-class Logger:
-    __slots__ = ['vendor_ids']
+class KeyLogger:
+    __slots__ = ['__vendor_ids']
 
     def __init__(self) -> None:
-        self.vendor_ids: list[int] = self.get_vendor_id()
+        self.__vendor_ids: list[int] = self.get_vendor_id()
 
     def __del__(self):
         pass
@@ -50,4 +52,5 @@ class Logger:
 
 
 if __name__ == "__main__":
-    pass
+    key_logger = KeyLogger()
+    key_logger.run()
