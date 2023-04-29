@@ -7,7 +7,7 @@ from src.Logger import Logger
 
 def main(args: argparse.ArgumentParser) -> None:
     setup: Setup = Setup(args)
-    logging.info("Starting")
+
 
 
 if __name__ == "__main__":
