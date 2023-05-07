@@ -43,15 +43,14 @@ class KeyLogger:
     @staticmethod
     def get_devices() -> list[[int, int]]:
         devices = usb.core.find(find_all=True)
-        vendor_ids: list[[int, int]] = []
+        found_devices: list[[int, int]] = []
         # Enumerate over all USB devices
         for device in devices:
             try:
-                object: list[int, int] = [device.idVendor, device.idProduct]
-                vendor_ids.append(object)
+                found_devices.append([device.idVendor, device.idProduct])
             except usb.core.USBError as e:
                 print(f"Error reading Vendor ID: {e}")
-        return vendor_ids
+        return found_devices
 
     # TODO: Rewrite this code
     def run(self):

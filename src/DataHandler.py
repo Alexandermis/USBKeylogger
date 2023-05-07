@@ -19,16 +19,16 @@ class DataHandler:
     def __del__(self):
         pass
 
-    def read(self) -> list[str]:
-        try:
-            return_value: list[str] = []
-            with open(self.filename) as f:
-                for line in f.readlines():
-                    return_value.append(line)
-            return return_value
-        except Exception as e:
-            logging.error(e)
-            raise e
+    # def read(self) -> list[str]:
+    #     try:
+    #         return_value: list[str] = []
+    #         with open(self.filename) as f:
+    #             for line in f.readlines():
+    #                 return_value.append(line)
+    #         return return_value
+    #     except Exception as e:
+    #         logging.error(e)
+    #         raise e
 
     def write(self, text: str) -> None:
         try:
