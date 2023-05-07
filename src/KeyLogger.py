@@ -38,7 +38,7 @@ class KeyLogger:
             device: Optional[usb.core.Device] = usb.core.find(
                 idVendor=id_vendor, idProduct=device_id
             )
-        return device
+            return device
 
     @staticmethod
     def get_devices() -> list[[int, int]]:
