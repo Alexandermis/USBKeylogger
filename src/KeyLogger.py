@@ -1,7 +1,7 @@
 import logging
 from typing import Optional
 import usb.core, usb.util
-from src import DataHandler
+from src.DataHandler import DataHandler
 from src.USBForwarder import USBForwarder
 
 
@@ -26,7 +26,7 @@ class KeyLogger:
         device_id: int = 0
         for device in self.__devices:
             # TODO set right device here
-            print(device)
+            print(f'{device}   233')
             if with_device == "forward":
                 pass
             elif with_device == "receive":
