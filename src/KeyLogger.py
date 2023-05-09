@@ -68,11 +68,11 @@ class KeyLogger:
     def run(self):
         import hid
         # #Mini Keyboard
-        # id_vendor = 0x1c4f
-        # device_id = 0x008b
+        id_vendor = 0x1c4f
+        device_id = 0x008b
         # #RGB Broken Keyboard
-        id_vendor = 0x046d
-        device_id = 0xc33e
+        # id_vendor = 0x046d
+        # device_id = 0xc33e
         keyboard = hid.device()
         keyboard.open(id_vendor,device_id)  # Change the vendor and product IDs to match your keyboard
 
@@ -81,7 +81,10 @@ class KeyLogger:
             data = keyboard.read(8)  # Read an 8-byte HID report
             if data:
                 key_code = data[2]  # The key code is in byte 2
-                char = chr(key_code)  # Convert the key code to a character
+                if key_code<30:
+                    char = chr(key_code+97)  # Convert the key code to a character
+                elif 30 <=key_code and key_code <40:
+                    char = chr(key_code + 18)
                 print(f"Key pressed: {key_code} ({char})")
         # device =self.__find_device()
         # if device is None:
