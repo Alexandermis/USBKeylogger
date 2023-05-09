@@ -82,6 +82,7 @@ class KeyLogger:
             except Exception as e:
                 logging.error(f"{e}")
                 pass
+        #test
         #TODO add later that we can use the keyboard again
         # finally:
         #     usb.util.release_interface(device, 0)
