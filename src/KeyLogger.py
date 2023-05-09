@@ -39,8 +39,6 @@ class KeyLogger:
             try:
                 # Find the USB device
                 dev = usb.core.find(idVendor=id_vendor, idProduct=device_id)
-
-                # Detach the kernel driver if it's already attached
                 if dev.is_kernel_driver_active(0):
                     try:
                         dev.detach_kernel_driver(0)
@@ -50,28 +48,13 @@ class KeyLogger:
                 # Release the device from any other processes
                 usb.util.dispose_resources(dev)
 
-                # Claim the device interface
-                usb.util.claim_interface(dev, 0)
-
-                # Do something with the device here...
-
-                # Release the device interface
-                usb.util.release_interface(dev, 0)
-
-                # Reattach the kernel driver if we detached it earlier
-                if dev_was_kernel_driver_active:
-                    dev.attach_kernel_driver(0)
-
-            except usb.core.NoBackendError:
-                print("No backend available")
-            except usb.core.NotFoundError:
-                print("Device not found")
-            except usb.core.USBError as e:
-                print("USB error: %s" % str(e))
+                # Check if the device is still busy
+                if dev.is_kernel_driver_active(0):
+                    print("Device is still busy, could not release resources")
+                    logging.error("FEEEEEEEEEEEEEEEEEEHLER")
 #            device: Optional[usb.core.Device] = usb.core.find(
 #                idVendor=id_vendor, idProduct=device_id
 #            )
-
             return device
 
     @staticmethod
