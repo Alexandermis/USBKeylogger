@@ -22,9 +22,11 @@ class KeyLogger:
         pass
 
     def __find_device(self, with_device: str = "forward") -> Optional[usb.core.Device]:
+        logging.error("First Time ...")
         id_vendor: int = 0
         device_id: int = 0
         for device in self.__devices:
+            print(device)
             # TODO set right device here
             print(f'{device}   233')
             if with_device == "forward":
@@ -38,6 +40,7 @@ class KeyLogger:
             device: Optional[usb.core.Device] = usb.core.find(
                 idVendor=id_vendor, idProduct=device_id
             )
+
             return device
 
     @staticmethod
