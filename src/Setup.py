@@ -8,7 +8,7 @@ from src.KeyLogger import KeyLogger
 class Logger:
     __slots__ = ["root_handler", "stream_handler", "__mode", "keylogger"]
 
-    def __init__(self, mode: str | None) -> None:
+    def __init__(self, mode: str) -> None:
         self.__mode = mode
         self.root_handler = logging.getLogger()
         if mode == "debug" or mode == "d":
