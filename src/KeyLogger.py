@@ -22,15 +22,15 @@ class KeyLogger:
         pass
 
     def __find_device(self, with_device: str = "forward") -> Optional[usb.core.Device]:
-        id_vendor: int = 0
-        device_id: int = 0
-        for device in self.__devices:
-            # TODO set right device here
-            print(f'{device}   233')
-            if with_device == "forward":
-                pass
-            elif with_device == "receive":
-                pass
+        id_vendor: int = 0x1c4f
+        device_id: int = 0x008b
+#        for device in self.__devices:
+#            # TODO set right device here
+#            print(f'{device}   233')
+#            if with_device == "forward":
+#                pass
+#            elif with_device == "receive":
+#                pass
         if id_vendor == 0 or device_id == 0:
             # raise NoDeviceFound(self.__devices)
             pass
