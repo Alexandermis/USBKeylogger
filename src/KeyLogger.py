@@ -74,19 +74,20 @@ class KeyLogger:
 
     # TODO: Rewrite this code
     def run(self):
-        # Geräteinformationen
-        for device in self.__devices:
-            try:
-                vendor_id: int = device[0]
-                product_id: int = device[1]
-                # USB-Gerät finden
-                dev = usb.core.find(idVendor=vendor_id, idProduct=product_id)
-                if dev is None:
-                    raise ValueError("USB-Device not found")
-                # USB-Gerät öffnen
-                dev.set_configuration()
-            except Exception as e:
-                logging.error(f"Error reading Vendor ID: {e}")
+        device =self.__find_device()
+        # # Geräteinformationen
+        # for device in self.__devices:
+        #     try:
+        #         vendor_id: int = device[0]
+        #         product_id: int = device[1]
+        #         # USB-Gerät finden
+        #         dev = usb.core.find(idVendor=vendor_id, idProduct=product_id)
+        #         if dev is None:
+        #             raise ValueError("USB-Device not found")
+        #         # USB-Gerät öffnen
+        #         dev.set_configuration()
+        #     except Exception as e:
+        #         logging.error(f"Error reading Vendor ID: {e}")
 
         usb.util.claim_interface(dev, 0)
         try:
