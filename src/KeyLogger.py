@@ -67,8 +67,12 @@ class KeyLogger:
     # TODO: Rewrite this code
     def run(self):
         import hid
-        id_vendor = 0x1c4f
-        device_id = 0x008b
+        # #Mini Keyboard
+        # id_vendor = 0x1c4f
+        # device_id = 0x008b
+        # #RGB Broken Keyboard
+        # id_vendor = 0x046d
+        # device_id = 0xc33e
         keyboard = hid.device()
         keyboard.open(id_vendor,device_id)  # Change the vendor and product IDs to match your keyboard
 
