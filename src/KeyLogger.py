@@ -54,6 +54,8 @@ class KeyLogger:
                     logging.error("FEEEEEEEEEEEEEEEEEEHLER")
 #            device: Optional[usb.core.Device] = usb.core.find(
 #                idVendor=id_vendor, idProduct=device_id
+            except:
+                print("4848")
 #            )
         return device
 
