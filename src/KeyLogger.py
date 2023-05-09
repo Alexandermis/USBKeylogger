@@ -70,8 +70,7 @@ class KeyLogger:
         id_vendor: int = 0x1c4f
         device_id: int = 0x008b
         keyboard = hid.device()
-        logging.info(keyboard)
-        keyboard.open(id_vendor, device_id)  # Change the vendor and product IDs to match your keyboard
+        keyboard.open(device_id,id_vendor)  # Change the vendor and product IDs to match your keyboard
 
         # Read and process HID reports
         while True:
