@@ -22,8 +22,8 @@ class Forwarder:
         server_address = (network_ip, port)
         # Listen for incoming connections
         self.server_socket.listen(1)
-        print('Server is listening on {}:{}'.format(*server_address))
+        logging.info('Server is listening on {}:{}'.format(*server_address))
         # Accept a client connection
         self.client_socket, client_address = self.server_socket.accept()
-        print(f'Client connected: {str(client_address)}')
+        logging.info('Client connected: {}:{}'.format(*client_address))
 
