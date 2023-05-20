@@ -5,7 +5,7 @@ def client():
     # Create a socket object
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # Define server address and port
-    server_address = ('127.0.1.1', 1234)
+    server_address = ('192.168.0.101        ', 1234)
 
     # Connect to the server
     client_socket.connect(server_address)

