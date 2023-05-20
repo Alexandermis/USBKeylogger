@@ -1,6 +1,7 @@
 import usb.core
 import keyboard
 import socket
+import pyautogui
 def client(server_ip: str ='192.168.0.101', server_port: int = 1234):
     # Create a socket object
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -10,13 +11,22 @@ def client(server_ip: str ='192.168.0.101', server_port: int = 1234):
     # Connect to the server
     client_socket.connect(server_address)
     print('Connected to {}:{}'.format(*server_address))
-
+    data = None
     while True:
         # Receive data from the server
-        data = client_socket.recv(1024).decode('utf-8')
+        data: str = client_socket.recv(1024).decode('utf-8')
+        for char in data:
+            if not data:
+                pass
+            elif data == "]":
+                pass
+            else:
+                pyautogui.keyDown(char)
+                pyautogui.keyUp(char)
 
         # Print the received data
         print('Received from server:', data)
+
         if data.lower() == 'exit':
             break
 
