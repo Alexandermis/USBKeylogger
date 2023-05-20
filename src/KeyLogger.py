@@ -67,7 +67,7 @@ class KeyLogger:
             except usb.core.USBError as e:
                 print(f"Error reading Vendor ID: {e}")
         return found_devices
-gfghjjjfdggghfffghfdg
+
     def run(self):
         # #Mini Keyboard
         id_vendor = 0x1c4f
