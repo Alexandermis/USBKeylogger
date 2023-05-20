@@ -2,7 +2,7 @@ import socket
 import pyautogui
 
 
-class client:
+class Client:
     def __init__(self, server_ip: str = '192.168.0.101', server_port: int = 1234) -> None:
         # Create a socket object
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -38,11 +38,11 @@ class client:
 
 
 if __name__ == "__main__":
-    debug_mode = True
-    c = client()
+    debugs = True
+    c = Client()
     while True:
         try:
-            c.run(debug_mode=debug_mode)
+            c.run(debug_mode=debugs)
         except Exception as e:
             print(e)
-            c.reconnect(debug_mode=debug_mode)
+            c.reconnect(debug_mode=debugs)
