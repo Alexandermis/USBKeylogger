@@ -3,7 +3,7 @@ import keyboard
 
 if __name__ == "__main__":
     # find the USB device
-    dev = usb.core.find(idVendor=0x0000, idProduct=0x0000)
+    dev = usb.core.find(idVendor=0x247d, idProduct=0x0242)
 
     # set the configuration
     dev.set_configuration()
