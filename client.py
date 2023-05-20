@@ -7,7 +7,9 @@ import pyautogui
 class Client:
     def __init__(self, server_ip: str = '192.168.0.101', server_port: int = 1234) -> None:
         # Create a socket object
+
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.client_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         # Define server address and port
         self.server_address = (server_ip, server_port)
 
@@ -39,11 +41,14 @@ class Client:
         # Connect to the server
         for i in range(10000):
             try:
+                self.client_socket.close()
                 self.client_socket.connect(self.server_address)
                 break
             except Exception as e:
+                print(e)
                 if debug_mode:
-                    print(f"No connection to {self.server_address} try reconnecting in {i}sec")
+                    adr: str='{}:{}'.format(*self.server_address)
+                    print(f"No connection to {adr} try reconnecting in {i}sec")
                 time.sleep(i)
 
         if debug_mode:

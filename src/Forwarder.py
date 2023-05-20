@@ -8,6 +8,8 @@ class Forwarder:
                  port: int = 1234) -> None:
         if network_ip:
             self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # reopen the socket imminently after it closed
+            self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             # Define server address and port
             server_address = (network_ip, port)
             # Bind the socket to the server address
