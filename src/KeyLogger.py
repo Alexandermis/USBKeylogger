@@ -4,7 +4,6 @@ import usb.core, usb.util
 from src.DataHandler import DataHandler
 from src.Forwarder import Forwarder
 import hid
-import keyboard
 
 class NoDeviceFound(Exception):
     def __init__(self, devices: list = []):
