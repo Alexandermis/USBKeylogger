@@ -39,7 +39,6 @@ class Client:
         # Connect to the server
         for i in range(10000):
             try:
-                self.client_socket.close()
                 self.client_socket.connect(self.server_address)
                 break
             except Exception as e:
