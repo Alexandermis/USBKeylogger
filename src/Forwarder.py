@@ -20,7 +20,7 @@ class Forwarder:
             print('Server is listening on {}:{}'.format(*server_address))
             # Accept a client connection
             self.client_socket, client_address = self.server_socket.accept()
-            logging.INFO(f'Client connected: {str(client_address)}')
+            print(f'Client connected: {str(client_address)}')
 
     def send_data(self, endpoint, data):
         for i in range(5):
