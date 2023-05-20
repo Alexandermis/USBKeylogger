@@ -1,4 +1,6 @@
 import socket
+import time
+
 import pyautogui
 
 
@@ -8,6 +10,7 @@ class Client:
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # Define server address and port
         self.server_address = (server_ip, server_port)
+
     # close socket after client closed
     def __del__(self):
         self.client_socket.close()
@@ -32,7 +35,15 @@ class Client:
 
     def reconnect(self, debug_mode: bool = False):
         # Connect to the server
-        self.client_socket.connect(self.server_address)
+        for i in range(10000):
+            try:
+                self.client_socket.connect(self.server_address)
+                break
+            except Exception as e:
+                if debug_mode:
+                    print(f"No connection to {self.server_address} try reconnecting in {i}sec")
+                time.sleep(i)
+
         if debug_mode:
             print('Connected to {}:{}'.format(*self.server_address))
 
