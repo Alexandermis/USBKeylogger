@@ -17,7 +17,7 @@ class Forwarder:
             server_address = (network_ip, port)
             # Bind the socket to the server address
             self.server_socket.bind(server_address)
-            logging.INFO(f'Server created')
+            logging.info(f'Server created')
             self.listen()
     #
     # def send_data(self, endpoint, data):
