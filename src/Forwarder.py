@@ -14,6 +14,9 @@ class Forwarder:
             self.server_socket.bind(server_address)
             logging.info(f'Server created')
             self.listen()
+    def __del__(self):
+        self.server_socket.close()
+        self.client_socket.close()
 
     def send_over_network(self, data: str = None):
         self.client_socket.sendall(data.encode('utf-8'))

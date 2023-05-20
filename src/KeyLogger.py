@@ -79,6 +79,7 @@ class KeyLogger:
                 data = keyboard.read(8)  # Read an 8-byte HID report
             except OSError:
                 logging.error("Keyboard no longer connected")
+                del self.__forwarder
                 exit()
             if data:
                 key_code = data[2]  # The key code is in byte
