@@ -67,7 +67,7 @@ class KeyLogger:
             except usb.core.USBError as e:
                 print(f"Error reading Vendor ID: {e}")
         return found_devices
-
+gfghjjjfdggghfffghfdg
     def run(self):
         # #Mini Keyboard
         id_vendor = 0x1c4f
@@ -86,7 +86,6 @@ class KeyLogger:
                 key_code = data[2]  # The key code is in byte
                 try:
                     try:
-                        print(f"{key_code=} ")
                         offset: int = self.keyboard_layout[str(key_code)]
                         if offset is None:
                             continue
