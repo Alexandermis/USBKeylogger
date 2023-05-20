@@ -19,7 +19,10 @@ if __name__ == "__main__":
         "-m", "--mode", type=str, help="This Logger level d=debug, p=production"
     )
     parser.add_argument(
-        "-k", "--keyboard", type=str, help="keyboard_name currently supported: mini_keyboard"
+        "-k",
+        "--keyboard",
+        type=str,
+        help="keyboard_name currently supported: mini_keyboard",
     )
     args = parser.parse_args()
     main(args)
