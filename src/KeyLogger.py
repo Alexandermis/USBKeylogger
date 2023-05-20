@@ -76,6 +76,7 @@ class KeyLogger:
         # #RGB Broken Keyboard
         # id_vendor = 0x046d
         # device_id = 0xc33e
+
         keyboard = hid.device()
         keyboard.open(id_vendor, device_id)
         while True:
