@@ -12,7 +12,7 @@ class Forwarder:
         if network_ip:
             self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             # Define server address and port
-            server_address = ('127.0.1.1', 1234)
+            server_address = (network_ip, 1234)
             # Bind the socket to the server address
             self.server_socket.bind(server_address)
             # Listen for incoming connections
