@@ -18,8 +18,10 @@ class Client:
     def run(self, debug_mode: bool = False):
         data: str = None
         while True:
-            data: str = self.client_socket.recv(1024).decode('utf-8')
+            data: str = self.client_socket.recv(512).decode('utf-8')
             # Print the received data
+            if not data:
+                raise ConnectionError
             if debug_mode:
                 print('Received from server:', data)
             for char in data:
