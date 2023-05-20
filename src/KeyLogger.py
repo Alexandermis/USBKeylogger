@@ -68,7 +68,6 @@ class KeyLogger:
                 print(f"Error reading Vendor ID: {e}")
         return found_devices
 
-    # TODO: Rewrite this code
     def run(self):
         # #Mini Keyboard
         id_vendor = 0x1c4f
