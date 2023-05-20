@@ -14,6 +14,7 @@ class Forwarder:
             self.server_socket.bind(server_address)
             logging.info(f'Server created')
             self.listen()
+    # close all the sockets
     def __del__(self):
         self.server_socket.close()
         self.client_socket.close()
