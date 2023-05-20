@@ -1,11 +1,11 @@
 import usb.core
 import keyboard
 import socket
-def client():
+def client(server_ip: str ='192.168.0.101', server_port: int = 1234):
     # Create a socket object
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # Define server address and port
-    server_address = ('192.168.0.101', 1234)
+    server_address = (server_ip, server_port)
 
     # Connect to the server
     client_socket.connect(server_address)
