@@ -18,12 +18,11 @@ def client(server_ip: str ='192.168.0.101', server_port: int = 1234):
         for char in data:
             if not data:
                 pass
-            elif data == "]":
+            elif char == "]":
                 pass
             else:
                 pyautogui.keyDown(char)
                 pyautogui.keyUp(char)
-
         # Print the received data
         print('Received from server:', data)
 

