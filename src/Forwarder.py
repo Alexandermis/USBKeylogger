@@ -18,7 +18,7 @@ class Forwarder:
     def send_over_network(self, data: str = None):
         self.client_socket.sendall(data.encode('utf-8'))
 
-    def listen(self, network_ip: str = "192.168.0.101", port: int = 1234):
+    def listen(self, network_ip: str = "192.168.0.101", port: int = 1234) -> str:
         server_address = (network_ip, port)
         # Listen for incoming connections
         self.server_socket.listen(1)
@@ -26,4 +26,5 @@ class Forwarder:
         # Accept a client connection
         self.client_socket, client_address = self.server_socket.accept()
         logging.info('Client connected: {}:{}'.format(*client_address))
+        return str(client_address)
 

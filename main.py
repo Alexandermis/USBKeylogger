@@ -5,7 +5,7 @@ from src.Setup import Setup
 from src.KeyLogger import KeyLogger
 
 
-def main(args: argparse.ArgumentParser) -> None:
+def main(args) -> None:
     setup: Setup = Setup(args)
     keylogger = setup.get_keylogger()
     keylogger.run()
@@ -17,6 +17,9 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "-m", "--mode", type=str, help="This Logger level d=debug, p=production"
+    )
+    parser.add_argument(
+        "-k", "--keyboard", type=str, help="keyboard_name currently supported: mini_keyboard"
     )
     args = parser.parse_args()
     main(args)

@@ -1,8 +1,10 @@
 import sys
 import logging
 import argparse
+from collections import defaultdict
 from src.DataHandler import DataHandler
 from src.KeyLogger import KeyLogger
+import json
 
 
 class Logger:
@@ -28,8 +30,18 @@ class Setup:
 
     def __init__(self, args):
         self.logger = Logger((lambda m: m if m else None)(args.mode))
-        self.__keylogger = KeyLogger(DataHandler())
+        if args.keyboard:
+            keyboard_layout: dict[int, int] = self.read_keyboard_layout(args.keyboard)
+        else:
+            keyboard_layout: dict[int, int] = self.read_keyboard_layout("mini_keyboard")
+        self.__keylogger = KeyLogger(keyboard_layout, DataHandler())
         logging.info("Setup Complete")
 
     def get_keylogger(self):
         return self.__keylogger
+
+    @staticmethod
+    def read_keyboard_layout(name: str = "mini_keyboard") -> dict[int, int]:
+        with open(f'data/{name}.json', 'r') as file:
+            keyboard_layout: dict[int, int] = json.load(file)
+        return keyboard_layout
