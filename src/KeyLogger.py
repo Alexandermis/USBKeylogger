@@ -72,10 +72,6 @@ class KeyLogger:
         # #Mini Keyboard
         id_vendor = 0x1c4f
         device_id = 0x008b
-        # #RGB Broken Keyboard
-        # id_vendor = 0x046d
-        # device_id = 0xc33e
-        print(self.keyboard_layout)
         keyboard = hid.device()
         keyboard.open(id_vendor, device_id)
         while True:
@@ -88,7 +84,8 @@ class KeyLogger:
                 key_code = data[2]  # The key code is in byte
                 try:
                     try:
-                        offset: int =self.keyboard_layout[str(key_code)]
+                        print(f"{key_code=} ")
+                        offset: int = self.keyboard_layout[str(key_code)]
                     except KeyError:
                         pass
                     char: chr = chr(offset + key_code)
@@ -101,6 +98,10 @@ class KeyLogger:
                 except Exception as e:
                     logging.error(f"Key {key_code} not in the layout")
                     logging.error(e)
+
+
+
+
                 # if key_code < 30:
                 #     char = chr(key_code + 93)  # Convert the key code to a character
                 # elif 30 <= key_code and key_code < 49:
