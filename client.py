@@ -7,9 +7,7 @@ import pyautogui
 class Client:
     def __init__(self, server_ip: str = '192.168.0.101', server_port: int = 1234) -> None:
         # Create a socket object
-
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         # Define server address and port
         self.server_address = (server_ip, server_port)
 
