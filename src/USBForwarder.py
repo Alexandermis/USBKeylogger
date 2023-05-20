@@ -7,7 +7,7 @@ import socket
 class USBForwarder:
     #__slots__ = ["device", "server_socket ", "client_socket"]
 
-    def __init__(self, device: Optional[usb.core.Device], network_ip: str = "127.0.1.1") -> None:
+    def __init__(self, device: Optional[usb.core.Device] = None, network_ip: str = "127.0.1.1") -> None:
         self.device: Optional[usb.core.Device] = device
         if network_ip:
             self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
