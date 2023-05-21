@@ -26,15 +26,10 @@ class Client:
                 raise ConnectionError
             if debug_mode:
                 print("Received from server:", data)
-            char: str
+            char: chr
             for char in data:
-                if not data:
-                    pass
-                elif char == "]":
-                    pass
-                else:
-                    pyautogui.keyDown(char)
-                    pyautogui.keyUp(char)
+                pyautogui.keyDown(char)
+                pyautogui.keyUp(char)
 
     def reconnect(self, debug_mode: bool = False) -> None:
         # Connect to the server
