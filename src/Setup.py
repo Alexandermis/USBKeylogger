@@ -35,7 +35,6 @@ class Setup:
         keyboard_layout: dict[int, list[int,int]] = self.read_keyboard_layout(
             (lambda k: k if k else "mini_keyboard")(args.keyboard)
         )
-        print(keyboard_layout)
         forwarder: Forwarder = Forwarder(
             server_ip=(lambda i: i if i else "192.168.0.101")(args.ip),
             port=(lambda p: p if p else "1234")(args.port),
