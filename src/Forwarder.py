@@ -25,7 +25,7 @@ class Forwarder:
 
     def send_over_network(self, data: str = None) -> None:
         self.client_socket.sendall(data.encode("utf-8"))
-
+    #Test
     def listen(self, network_ip: str = None, port: int = 1234) -> str:
         server_address = ((lambda i: i if i else self.server_ip)(network_ip), (lambda p: p if p else self.port)(port))
         # Listen for incoming connections
