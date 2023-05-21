@@ -3,24 +3,24 @@ import socket
 
 
 class Forwarder:
-    def __init__(self, network_ip: str = "192.168.0.101", port: int = 1234) -> None:
-        if network_ip:
+    def __init__(self, server_ip: str = "192.168.0.101", port: int = 1234) -> None:
+        if server_ip:
             self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             # socket can be reopened imminently
             self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             # Define server address and port
-            server_address = (network_ip, port)
+            server_address = (server_ip, port)
             # Bind the socket to the server address
             self.server_socket.bind(server_address)
             logging.info(f"Server created")
             self.listen()
 
     # close all the sockets
-    def __del__(self):
+    def __del__(self) -> None:
         self.server_socket.close()
         self.client_socket.close()
 
-    def send_over_network(self, data: str = None):
+    def send_over_network(self, data: str = None) -> None:
         self.client_socket.sendall(data.encode("utf-8"))
 
     def listen(self, network_ip: str = "192.168.0.101", port: int = 1234) -> str:

