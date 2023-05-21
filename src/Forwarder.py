@@ -10,7 +10,7 @@ class Forwarder:
             self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             # Define server address and port
             # server_address = (server_ip, port)
-            server_address = ("192.68.67.121", 1234)
+            server_address = (server_ip, 1234)
             # Bind the socket to the server address
             self.server_socket.bind(server_address)
             logging.info(f"Server created")
@@ -25,7 +25,7 @@ class Forwarder:
         self.client_socket.sendall(data.encode("utf-8"))
 
     def listen(self, network_ip: str = "192.168.0.101", port: int = 1234) -> str:
-        server_address = ("192.68.67.121", port)
+        server_address = (network_ip, port)
         # Listen for incoming connections
         self.server_socket.listen(1)
         logging.info("Server is listening on {}:{}".format(*server_address))
