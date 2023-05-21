@@ -16,6 +16,7 @@ if __name__ == "__main__":
     parser: argparse.ArgumentParser = argparse.ArgumentParser(
         description="Python Hardware Keylogger"
     )
+    #test
     parser.add_argument(
         "-m", "--mode", type=str, help="This Logger level d=debug, p=production"
     )
