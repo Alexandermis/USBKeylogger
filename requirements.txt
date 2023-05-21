@@ -1,6 +1,4 @@
 pyusb==1.2.1
 libusb1==3.0.0
 pyautogui==0.9.53
-pynput==1.7.6
-pyautogui==0.9.53
 hid==1.0.5
