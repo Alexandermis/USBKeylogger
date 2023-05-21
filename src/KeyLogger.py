@@ -31,34 +31,6 @@ class KeyLogger:
     def __del__(self):
         pass
 
-    # def __find_device(self, with_device: str = "forward") -> Optional[usb.core.Device]:
-    #     id_vendor: int = 0x1c4f
-    #     device_id: int = 0x008b
-    #     if id_vendor == 0 or device_id == 0:
-    #         raise NoDeviceFound(self.__devices)
-    #         pass
-    #     else:
-    #         try:
-    #             # Find the USB device
-    #             device = usb.core.find(idVendor=id_vendor, idProduct=device_id)
-    #             if device.is_kernel_driver_active(0):
-    #                 try:
-    #                     device.detach_kernel_driver(0)
-    #                 except usb.core.USBError as e:
-    #                     print("Could not detach kernel driver: %s" % str(e))
-    #             # Release the device from any other processes
-    #             usb.util.dispose_resources(device)
-    #             # Check if the device is still busy
-    #
-    #             if device.is_kernel_driver_active(0):
-    #                 print("Device is still busy, could not release resources")
-    #                 logging.error("FEEEEEEEEEEEEEEEEEEHLER")
-    #             else:
-    #                 return device
-    #         except Exception as e:
-    #             logging.error(f"{e}")
-    #             return None
-
     @staticmethod
     def get_devices() -> list[[int, int]]:
         devices = usb.core.find(find_all=True)
@@ -72,10 +44,7 @@ class KeyLogger:
                 print(f"Error reading Vendor ID: {e}")
         return found_devices
 
-    def run(self):
-        # #Mini Keyboard
-        id_vendor = 0x1C4F
-        device_id = 0x008B
+    def run(self, id_vendor: int = 0x1C4F, device_id: int = 0x008B):
         keyboard = hid.device()
         keyboard.open(id_vendor, device_id)
         while True:
