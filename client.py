@@ -18,7 +18,6 @@ class Client:
         self.client_socket.close()
 
     def run(self, debug_mode: bool = False) -> None:
-        data: str = ""
         while True:
             data: str = self.client_socket.recv(512).decode("utf-8")
             # Print the received data
