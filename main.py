@@ -1,6 +1,4 @@
-import logging
 import argparse
-
 from src.Setup import Setup
 from src.KeyLogger import KeyLogger
 

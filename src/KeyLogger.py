@@ -1,5 +1,4 @@
 import logging
-from typing import Optional
 import usb.core, usb.util
 from src.DataHandler import DataHandler
 from src.Forwarder import Forwarder
