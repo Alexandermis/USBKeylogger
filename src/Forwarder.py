@@ -1,6 +1,6 @@
 import logging
 import socket
-
+import ipaddress
 
 class Forwarder:
     def __init__(self, server_ip: str = "192.168.0.101", port: int = 1234) -> None:
@@ -9,7 +9,7 @@ class Forwarder:
             # socket can be reopened imminently
             self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             # Define server address and port
-            server_address = (server_ip, port)
+            server_address = (ipaddress.IPv4Address(server_ip), port)
             # Bind the socket to the server address
             self.server_socket.bind(server_address)
             logging.info(f"Server created")
