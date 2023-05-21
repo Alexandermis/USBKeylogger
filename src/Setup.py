@@ -52,5 +52,6 @@ class Setup:
     @staticmethod
     def read_keyboard_layout(name: str = "mini_keyboard") -> dict[int, int]:
         with open(f"data/{name}.json", "r") as file:
+            print(json.load(file))
             keyboard_layout: dict[int, int] = json.load(file)
         return keyboard_layout
