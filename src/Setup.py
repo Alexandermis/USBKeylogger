@@ -31,10 +31,10 @@ class Setup:
     __slots__ = ["logger", "__keylogger"]
 
     def __init__(self, args) -> None:
-        self.logger: Logger = Logger((lambda m: m if m else None)(args.mode))
         keyboard_layout: dict[int, list[int, int]] = self.read_keyboard_layout(
             (lambda k: k if k else "mini_keyboard")(args.keyboard)
         )
+        self.logger: Logger = Logger((lambda m: m if m else None)(args.mode))
         forwarder: Forwarder = Forwarder(
             server_ip=(lambda i: i if i else "192.168.0.101")(args.ip),
             port=(lambda p: p if p else "1234")(args.port),
