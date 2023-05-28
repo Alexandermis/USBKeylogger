@@ -8,7 +8,7 @@ import json
 
 
 class Logger:
-    __slots__ = ["root_handler", "stream_handler", "__mode", "keylogger"]
+    __slots__ = ["root_handler", "__mode"]
 
     def __init__(self, mode: str) -> None:
         self.__mode: str = mode
@@ -28,7 +28,7 @@ class Logger:
 
 
 class Setup:
-    __slots__ = ["logger", "dataHandler", "__keylogger"]
+    __slots__ = ["logger", "__keylogger"]
 
     def __init__(self, args) -> None:
         self.logger: Logger = Logger((lambda m: m if m else None)(args.mode))

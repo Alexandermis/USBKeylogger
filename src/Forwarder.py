@@ -5,7 +5,7 @@ import ipaddress
 class Forwarder:
     def __init__(self, server_ip: str = "192.168.0.101", port: int = 1234) -> None:
         if server_ip:
-            self.server_ip=server_ip
+            self.server_ip = server_ip
             self.port = port
             self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             # socket can be reopened imminently
@@ -25,7 +25,7 @@ class Forwarder:
 
     def send_over_network(self, data: str = None) -> None:
         self.client_socket.sendall(data.encode("utf-8"))
-    #Test
+
     def listen(self, network_ip: str = None, port: int = 1234) -> str:
         server_address = ((lambda i: i if i else self.server_ip)(network_ip), (lambda p: p if p else self.port)(port))
         # Listen for incoming connections
