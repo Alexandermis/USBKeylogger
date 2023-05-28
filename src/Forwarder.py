@@ -1,6 +1,5 @@
 import logging
 import socket
-import ipaddress
 
 class Forwarder:
     def __init__(self, server_ip: str = "192.168.0.101", port: int = 1234) -> None:
