@@ -3,6 +3,7 @@ import time
 import pyautogui
 import argparse
 
+
 class Client:
     def __init__(
         self, server_ip: str = "192.168.0.101", server_port: int = 1234
@@ -27,7 +28,7 @@ class Client:
             char: chr
             for char in data:
                 if char == 40:
-                    pyautogui.press('enter')
+                    pyautogui.press("enter")
                 pyautogui.keyDown(char)
                 pyautogui.keyUp(char)
 
@@ -57,7 +58,9 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--port", type=str, help="The server port")
     args = parser.parse_args()
     debugs: bool = True
-    c: Client = Client(server_ip=args.ip, server_port=(lambda p: p if p else 1234)(args.port))
+    c: Client = Client(
+        server_ip=args.ip, server_port=(lambda p: p if p else 1234)(args.port)
+    )
     while True:
         try:
             c.run(debug_mode=debugs)

